@@ -2,7 +2,9 @@ package test.dentistryspringwebapp.models;
 
 public class PreviousAppointment {
     private int previous_appointment_id;
+    private int dentistry_id;
     private String dentistry;
+    private int dentist_id;
     private String dentist;
     private String appointment_day;
     private String appointment_time;
@@ -42,10 +44,21 @@ public class PreviousAppointment {
 
     public void setAdmission_price(int admission_price) {this.admission_price = admission_price;}
 
-    public PreviousAppointment(int previous_appointment_id, String dentistry, String dentist, String appointment_day,
-                               String appointment_time, String patient, String diagnosis, int admission_price) {
+    public int getDentistry_id() {return dentistry_id;}
+
+    public void setDentistry_id(int dentistry_id) {this.dentistry_id = dentistry_id;}
+
+    public int getDentist_id() {return dentist_id;}
+
+    public void setDentist_id(int dentist_id) {this.dentist_id = dentist_id;}
+
+    public PreviousAppointment(int previous_appointment_id, int dentistry_id, String dentistry, int dentist_id,
+                               String dentist, String appointment_day, String appointment_time, String patient,
+                               String diagnosis, int admission_price) {
         this.previous_appointment_id = previous_appointment_id;
+        this.dentistry_id = dentistry_id;
         this.dentistry = dentistry;
+        this.dentist_id = dentist_id;
         this.dentist = dentist;
         this.appointment_day = appointment_day;
         this.appointment_time = appointment_time;
