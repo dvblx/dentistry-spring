@@ -25,9 +25,32 @@ public class DentistDAO {
         return jdbcTemplate.query(SQLquery, new DentistMapper());
     }
 
-    public List<Dentist> filtering() {
-        SQLquery = "";
-        return jdbcTemplate.query(SQLquery, new DentistMapper());
+    public List<Dentist> filtering(String dentistry, String dentist_type) {
+        if (!dentistry.equals("") && !dentist_type.equals("")) {
+            SQLquery = "select dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, dentistry.dentistry_name,\n" +
+                    "dentist.experience, dentist_type.type_id ,dentist_type.type_name from dentist\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join dentist_type on dentist_type.type_id = dentist.dentist_type_id" +
+                    "where dentistry.dentistry_name = ? and dentist_type.type_name = ?";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentistry, dentist_type},new DentistMapper());
+        }
+        else if (!dentistry.equals("")){
+            SQLquery = "select dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, dentistry.dentistry_name,\n" +
+                    "dentist.experience, dentist_type.type_id ,dentist_type.type_name from dentist\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join dentist_type on dentist_type.type_id = dentist.dentist_type_id" +
+                    "where dentistry.dentistry_name = ?";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentistry},new DentistMapper());
+        }
+        else if(!dentist_type.equals("")){
+            SQLquery = "select dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, dentistry.dentistry_name,\n" +
+                    "dentist.experience, dentist_type.type_id ,dentist_type.type_name from dentist\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join dentist_type on dentist_type.type_id = dentist.dentist_type_id" +
+                    "where dentist_type.type_name = ?";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentist_type},new DentistMapper());
+        }
+        return this.index();
     }
 
     public Dentist show(int id) {

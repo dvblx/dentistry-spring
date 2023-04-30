@@ -28,17 +28,87 @@ public class TimeTableDAO {
     }
 
     public List<TimeTable> index() {
-        SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, dentistry.dentistry_name,\n" +
-                "                            week.day_name, timetable.admission_time from timetable\n" +
-                "                            join dentist on dentist.dentist_id = timetable.dentist_id\n" +
-                "                            join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
-                "                            join week on week.day_id = timetable.day_id\n" +
-                "                            order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
+        SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
+                "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
+                "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
+                "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                "join week on week.day_id = timetable.day_id\n" +
+                "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
         return jdbcTemplate.query(SQLquery, new TTMapper());
     }
 
-    public List<TimeTable> filtering() {
-        return null;
+    public List<TimeTable> filtering(String dentistry, String dentist, String day) {
+        if (!dentistry.equals("") && !dentist.equals("") && !day.equals("")){
+            SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
+                    "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
+                    "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join week on week.day_id = timetable.day_id\n" +
+                    "where dentistry.dentistry_name = ? and dentist.dentist_name = ? and week.day_name = ?\n" +
+                    "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentistry, dentist, day},new TTMapper());
+        }
+        else if (!dentistry.equals("") && !dentist.equals("") ){
+            SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
+                    "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
+                    "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join week on week.day_id = timetable.day_id\n" +
+                    "where dentistry.dentistry_name = ? and dentist.dentist_name = ?\n" +
+                    "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentistry, dentist},new TTMapper());
+        }
+        else if(!dentistry.equals("") && !day.equals("")){
+            SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
+                    "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
+                    "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join week on week.day_id = timetable.day_id\n" +
+                    "where dentistry.dentistry_name = ? and week.day_name = ?\n" +
+                    "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentistry, day},new TTMapper());
+        }
+        else if(!dentist.equals("") && !day.equals("")){
+            SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
+                    "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
+                    "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join week on week.day_id = timetable.day_id\n" +
+                    "where dentist.dentist_name = ? and week.day_name = ?\n" +
+                    "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentist, day},new TTMapper());
+        }
+        else if(!dentistry.equals("") ){
+            SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
+                    "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
+                    "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join week on week.day_id = timetable.day_id\n" +
+                    "where dentistry.dentistry_name = ?\n" +
+                    "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentistry},new TTMapper());
+        }
+        else if (!dentist.equals("")){
+            SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
+                    "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
+                    "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join week on week.day_id = timetable.day_id\n" +
+                    "where dentist.dentist_name = ?\n" +
+                    "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
+            return jdbcTemplate.query(SQLquery, new Object[]{dentist},new TTMapper());
+        }
+        else if (!day.equals("")){
+            SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
+                    "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
+                    "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
+                    "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
+                    "join week on week.day_id = timetable.day_id\n" +
+                    "where week.day_name = ?\n" +
+                    "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
+            return jdbcTemplate.query(SQLquery, new Object[]{day},new TTMapper());
+        }
+        return this.index();
     }
 
     public TimeTable show(int id) {
