@@ -2,10 +2,13 @@ package test.dentistryspringwebapp.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import test.dentistryspringwebapp.dao.mappers.DentistMapper;
 import test.dentistryspringwebapp.dao.mappers.FAMapper;
 import test.dentistryspringwebapp.models.Dentist;
 import test.dentistryspringwebapp.models.ForthcomingAppointment;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -30,20 +33,28 @@ public class ForthcomingAppointmentDAO {
                 localDate + "' and appointments.appointment_time > '" + localTime + "')";
         return jdbcTemplate.query(SQLquery, new FAMapper());
     }
-    public List<Dentist> filtering(){
+    public List<ForthcomingAppointment> filtering(){
         return null;
     }
 
-    public Dentist show(int id){
-        return null;
+    public ForthcomingAppointment show(int id){
+        return jdbcTemplate.query(SQLquery, new Object[]{id}, new FAMapper())
+                .stream().findAny().orElse(null);
     }
-    public void save(Dentist dentist){
+    public void save(ForthcomingAppointment appointment){
+        SQLquery = "INSERT INTO APPOINTMENTS(dentist_id, appointment_day, appointment_time, patient) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(SQLquery, appointment.getDentist_id(), Date.valueOf(appointment.getAppointment_day()),
+                Time.valueOf(appointment.getAppointment_time()), appointment.getPatient());
 
     }
-    public void update(int id, Dentist updatedDentist){
-
+    public void update(int id, ForthcomingAppointment updatedAppointment){
+        SQLquery = "UPDATE APPOINTMENTS SET dentist_id=?, appointment_day=?, appointment_time=?, patient=?" +
+                "where appointment_id=?";
+        jdbcTemplate.update(SQLquery, updatedAppointment.getDentist_id(), Date.valueOf(updatedAppointment.getAppointment_day()),
+                Time.valueOf(updatedAppointment.getAppointment_time()), updatedAppointment.getPatient(),id);
     }
     public void delete(int id){
-
+        SQLquery = "DELETE FROM APPOINTMENTS WHERE APPOINTMENT_ID = ?";
+        jdbcTemplate.update(SQLquery, id);
     }
 }
