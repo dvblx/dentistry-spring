@@ -66,7 +66,7 @@ public class Dentistry {
     }
 
 
-    public Dentistry(int id, String name, String phone, String head_of_clinic, String address,
+    public Dentistry(int id, String name, String address, String phone, String head_of_clinic,
                      int foundation_year, int customer_count) {
         this.dentistry_id = id;
         this.name = name;

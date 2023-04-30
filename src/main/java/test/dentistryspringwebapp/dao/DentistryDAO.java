@@ -3,6 +3,7 @@ package test.dentistryspringwebapp.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import test.dentistryspringwebapp.dao.mappers.DentistryMapper;
 import test.dentistryspringwebapp.models.Dentistry;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class DentistryDAO{
 
     public List<Dentistry> index(){
         SQLquery = "select * from dentistry";
-        return jdbcTemplate.query(SQLquery, new BeanPropertyRowMapper<>(Dentistry.class));
+        return jdbcTemplate.query(SQLquery, new DentistryMapper());
     }
     public List<Dentistry> filtering(){
         return null;

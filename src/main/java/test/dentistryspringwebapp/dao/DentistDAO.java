@@ -3,6 +3,7 @@ package test.dentistryspringwebapp.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import test.dentistryspringwebapp.dao.mappers.DentistMapper;
 import test.dentistryspringwebapp.models.Dentist;
 
 import java.util.List;
@@ -21,12 +22,12 @@ public class DentistDAO {
                 "dentist.experience, dentist_type.type_id ,dentist_type.type_name from dentist\n" +
                 "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
                 "join dentist_type on dentist_type.type_id = dentist.dentist_type_id";
-        return jdbcTemplate.query(SQLquery, new BeanPropertyRowMapper<>(Dentist.class));
+        return jdbcTemplate.query(SQLquery, new DentistMapper());
     }
 
     public List<Dentist> filtering() {
         SQLquery = "";
-        return jdbcTemplate.query(SQLquery, new BeanPropertyRowMapper<>(Dentist.class));
+        return jdbcTemplate.query(SQLquery, new DentistMapper());
     }
 
     public Dentist show(int id) {
@@ -35,7 +36,7 @@ public class DentistDAO {
                 "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
                 "join dentist_type on dentist_type.type_id = dentist.dentist_type_id" +
                 "where dentist.dentist_id=?";
-        return jdbcTemplate.query(SQLquery, new Object[]{id}, new BeanPropertyRowMapper<>(Dentist.class))
+        return jdbcTemplate.query(SQLquery, new Object[]{id}, new DentistMapper())
                 .stream().findAny().orElse(null);
     }
 

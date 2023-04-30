@@ -9,6 +9,8 @@ import java.sql.SQLException;
 public class TTMapper implements RowMapper<TimeTable> {
     @Override
     public TimeTable mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return null;
+        return new TimeTable(rs.getInt("tt_id"), rs.getInt("dentist_id"), rs.getString("dentist_name"),
+                rs.getInt("dentistry_id"), rs.getString("dentistry_name"),
+                rs.getString("day_name"), rs.getString("admission_time"));
     }
 }

@@ -39,7 +39,7 @@ public class TimeTable {
 
     public void setDentist_id(int dentist_id) {this.dentist_id = dentist_id;}
 
-    public TimeTable(int tt_id, int dentistry_id, String dentistry, int dentist_id, String dentist, String day, String admission_time) {
+    public TimeTable(int tt_id, int dentist_id, String dentist, int dentistry_id, String dentistry,  String day, String admission_time) {
         this.tt_id = tt_id;
         this.dentistry_id = dentistry_id;
         this.dentistry = dentistry;
