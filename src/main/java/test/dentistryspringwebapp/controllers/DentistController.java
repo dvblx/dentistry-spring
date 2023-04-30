@@ -9,7 +9,7 @@ import test.dentistryspringwebapp.models.Dentist;
 
 @Controller
 @RequestMapping("/dentists")
-public class DentistController implements ControllerInterface{
+public class DentistController{
 
     private final DentistDAO dentistDAO;
 
@@ -17,12 +17,15 @@ public class DentistController implements ControllerInterface{
     public DentistController(DentistDAO dentistDAO) {this.dentistDAO = dentistDAO;}
 
     @GetMapping()
-    public String getAll(Model model){
+    public String getAll(Model model, @RequestParam(value = "dentistry", required = false) String dentistry,
+                         @RequestParam(value = "dentist_type", required = false) String dentist_type){
+        model.addAttribute("dentists", dentistDAO.filtering(dentistry, dentist_type));
         return "dentist/";
     }
 
     @GetMapping("/{id}")
     public String getOne(@PathVariable("id") int id, Model model){
+        model.addAttribute("dentist", dentistDAO.show(id));
         return "dentist/";
     }
 

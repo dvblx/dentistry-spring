@@ -12,7 +12,7 @@ import test.dentistryspringwebapp.models.PreviousAppointment;
 
 @Controller
 @RequestMapping("/previous-appointments")
-public class PreviousAppointmentController implements ControllerInterface{
+public class PreviousAppointmentController{
 
     private final PreviousAppointmentDAO previousAppointmentDAO;
 

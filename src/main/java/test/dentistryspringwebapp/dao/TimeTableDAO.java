@@ -38,7 +38,7 @@ public class TimeTableDAO {
     }
 
     public List<TimeTable> filtering(String dentistry, String dentist, String day) {
-        if (!dentistry.equals("") && !dentist.equals("") && !day.equals("")){
+        if (dentistry != null && dentist != null && day != null){
             SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
                     "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
                     "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
@@ -48,7 +48,7 @@ public class TimeTableDAO {
                     "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
             return jdbcTemplate.query(SQLquery, new Object[]{dentistry, dentist, day},new TTMapper());
         }
-        else if (!dentistry.equals("") && !dentist.equals("") ){
+        else if (dentistry != null && dentist != null){
             SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
                     "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
                     "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
@@ -58,7 +58,7 @@ public class TimeTableDAO {
                     "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
             return jdbcTemplate.query(SQLquery, new Object[]{dentistry, dentist},new TTMapper());
         }
-        else if(!dentistry.equals("") && !day.equals("")){
+        else if(dentistry != null && day != null){
             SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
                     "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
                     "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
@@ -68,7 +68,7 @@ public class TimeTableDAO {
                     "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
             return jdbcTemplate.query(SQLquery, new Object[]{dentistry, day},new TTMapper());
         }
-        else if(!dentist.equals("") && !day.equals("")){
+        else if(dentist != null && day != null){
             SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
                     "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
                     "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
@@ -78,7 +78,7 @@ public class TimeTableDAO {
                     "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
             return jdbcTemplate.query(SQLquery, new Object[]{dentist, day},new TTMapper());
         }
-        else if(!dentistry.equals("") ){
+        else if(dentistry != null){
             SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
                     "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
                     "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
@@ -88,7 +88,7 @@ public class TimeTableDAO {
                     "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
             return jdbcTemplate.query(SQLquery, new Object[]{dentistry},new TTMapper());
         }
-        else if (!dentist.equals("")){
+        else if (dentist != null){
             SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
                     "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
                     "join dentist on dentist.dentist_id = timetable.dentist_id\n" +
@@ -98,7 +98,7 @@ public class TimeTableDAO {
                     "order by dentistry.dentistry_name, dentist.dentist_name, week.day_id";
             return jdbcTemplate.query(SQLquery, new Object[]{dentist},new TTMapper());
         }
-        else if (!day.equals("")){
+        else if (day != null){
             SQLquery = "select timetable.tt_id, dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, " +
                     "dentistry.dentistry_name, week.day_name, timetable.admission_time from timetable\n" +
                     "join dentist on dentist.dentist_id = timetable.dentist_id\n" +

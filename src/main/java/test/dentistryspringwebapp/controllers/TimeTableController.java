@@ -3,16 +3,13 @@ package test.dentistryspringwebapp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import test.dentistryspringwebapp.dao.TimeTableDAO;
 import test.dentistryspringwebapp.models.TimeTable;
 
 @Controller
 @RequestMapping("/timetable")
-public class TimeTableController implements ControllerInterface {
+public class TimeTableController {
 
     private final TimeTableDAO timeTableDAO;
 
@@ -20,7 +17,10 @@ public class TimeTableController implements ControllerInterface {
     public TimeTableController(TimeTableDAO timeTableDAO) {this.timeTableDAO = timeTableDAO;}
 
     @GetMapping()
-    public String getAll(Model model) {
+    public String getAll(Model model, @RequestParam(value = "dentistry", required = false) String dentistry,
+                         @RequestParam(value = "dentist", required = false) String dentist,
+                         @RequestParam(value = "day", required = false) String day) {
+        model.addAttribute("timetable", timeTableDAO.filtering(dentistry, dentist, day));
         return "timetable/";
     }
 

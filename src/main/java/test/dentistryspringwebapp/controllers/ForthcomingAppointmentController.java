@@ -12,7 +12,7 @@ import test.dentistryspringwebapp.models.ForthcomingAppointment;
 
 @Controller
 @RequestMapping("/forthcoming-appointments")
-public class ForthcomingAppointmentController implements ControllerInterface{
+public class ForthcomingAppointmentController{
 
     private final ForthcomingAppointmentDAO forthcomingAppointmentDAO;
 

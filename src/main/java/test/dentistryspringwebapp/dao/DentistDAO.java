@@ -26,7 +26,7 @@ public class DentistDAO {
     }
 
     public List<Dentist> filtering(String dentistry, String dentist_type) {
-        if (!dentistry.equals("") && !dentist_type.equals("")) {
+        if (dentistry != null && dentist_type != null) {
             SQLquery = "select dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, dentistry.dentistry_name,\n" +
                     "dentist.experience, dentist_type.type_id ,dentist_type.type_name from dentist\n" +
                     "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
@@ -34,7 +34,7 @@ public class DentistDAO {
                     "where dentistry.dentistry_name = ? and dentist_type.type_name = ?";
             return jdbcTemplate.query(SQLquery, new Object[]{dentistry, dentist_type},new DentistMapper());
         }
-        else if (!dentistry.equals("")){
+        else if (dentistry != null){
             SQLquery = "select dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, dentistry.dentistry_name,\n" +
                     "dentist.experience, dentist_type.type_id ,dentist_type.type_name from dentist\n" +
                     "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
@@ -42,7 +42,7 @@ public class DentistDAO {
                     "where dentistry.dentistry_name = ?";
             return jdbcTemplate.query(SQLquery, new Object[]{dentistry},new DentistMapper());
         }
-        else if(!dentist_type.equals("")){
+        else if(dentist_type != null){
             SQLquery = "select dentist.dentist_id, dentist.dentist_name, dentistry.dentistry_id, dentistry.dentistry_name,\n" +
                     "dentist.experience, dentist_type.type_id ,dentist_type.type_name from dentist\n" +
                     "join dentistry on dentistry.dentistry_id = dentist.dentistry_id\n" +
