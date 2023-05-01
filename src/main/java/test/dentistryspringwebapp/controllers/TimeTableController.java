@@ -3,9 +3,12 @@ package test.dentistryspringwebapp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import test.dentistryspringwebapp.dao.TimeTableDAO;
 import test.dentistryspringwebapp.models.TimeTable;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/timetable")
@@ -31,11 +34,11 @@ public class TimeTableController {
 
     @GetMapping("/new")
     public String addNew(Model model) {
-        return "timetable/";
+        return "timetable/new";
     }
 
     @PostMapping()
-    public String creation(@ModelAttribute("timetable") TimeTable timeTable){
+    public String creation(@ModelAttribute("timetable") @Valid TimeTable timeTable, BindingResult bindingResult){
 
         return "redirect:/timetable";
     }

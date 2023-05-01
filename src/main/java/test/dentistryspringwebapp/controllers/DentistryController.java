@@ -31,15 +31,15 @@ public class DentistryController{
         model.addAttribute("dentistry", dentistryDAO.show(id));
         return "dentistry/";
     }
-
     @GetMapping("/new")
     public String addNew(Model model, @ModelAttribute("dentistry") Dentistry dentistry){
-        return "dentistry/";
+
+        return "dentistry/new";
     }
-
     @PostMapping()
-    public String creation(@ModelAttribute("dentist") Dentistry dentistry){
-
+    public String creation(@ModelAttribute("dentistry") @Valid Dentistry dentistry, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){return "dentistry/new";}
+        dentistryDAO.save(dentistry);
         return "redirect:/dentistry";
     }
     @GetMapping("/{id}/edit")
@@ -48,7 +48,7 @@ public class DentistryController{
         return "dentistry/edit";
     }
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") @Valid Dentistry dentistry, BindingResult bindingResult,
+    public String update(@ModelAttribute("dentistry") @Valid Dentistry dentistry, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
             return "/dentistry/edit";
