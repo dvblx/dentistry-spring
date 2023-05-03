@@ -28,23 +28,23 @@ public class DentistController{
     public String getAll(Model model, @RequestParam(value = "dentistry", required = false) String dentistry,
                          @RequestParam(value = "dentist_type", required = false) String dentist_type){
         model.addAttribute("dentists", dentistDAO.filtering(dentistry, dentist_type));
-        return "dentist/";
+        return "dentist/all_dentists";
     }
 
     @GetMapping("/{id}")
     public String getOne(@PathVariable("id") int id, Model model){
         model.addAttribute("dentist", dentistDAO.show(id));
-        return "dentist/";
+        return "dentist/one_dentist";
     }
 
     @GetMapping("/new")
     public String addNew(Model model){
-        return "dentist/";
+        return "dentist/new_dentist";
     }
 
     @PostMapping()
     public String creation(@ModelAttribute("dentist") @Valid Dentist dentist, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){return "dentist/new";}
+        if (bindingResult.hasErrors()){return "dentist/new_dentist";}
         dentistDAO.save(dentist);
         return "redirect:/dentists";
     }

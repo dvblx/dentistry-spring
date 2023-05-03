@@ -39,7 +39,8 @@ public class TimeTableController {
 
     @PostMapping()
     public String creation(@ModelAttribute("timetable") @Valid TimeTable timeTable, BindingResult bindingResult){
-
+        if (bindingResult.hasErrors()){return "timetable/new";}
+        timeTableDAO.save(timeTable);
         return "redirect:/timetable";
     }
 }

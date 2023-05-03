@@ -23,41 +23,37 @@ public class DentistryController{
     @GetMapping()
     public String getAll(Model model){
         model.addAttribute("dentistry", dentistryDAO.index());
-        return "dentistry/";
+        return "dentistry/all_dentistry";
     }
 
     @GetMapping("/{id}")
     public String getOne(@PathVariable("id") int id, Model model){
         model.addAttribute("dentistry", dentistryDAO.show(id));
-        return "dentistry/";
+        return "dentistry/one_dentistry";
     }
     @GetMapping("/new")
-    public String addNew(Model model, @ModelAttribute("dentistry") Dentistry dentistry){
-
-        return "dentistry/new";
-    }
+    public String addNew(Model model, @ModelAttribute("dentistry") Dentistry dentistry){return "dentistry/new_dentistry";}
     @PostMapping()
     public String creation(@ModelAttribute("dentistry") @Valid Dentistry dentistry, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){return "dentistry/new";}
+        if (bindingResult.hasErrors()){return "dentistry/new_dentistry";}
         dentistryDAO.save(dentistry);
         return "redirect:/dentistry";
     }
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("dentistry", dentistryDAO.show(id));
-        return "dentistry/edit";
+        return "dentistry/edit_dentistry";
     }
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("dentistry") @Valid Dentistry dentistry, BindingResult bindingResult,
                          @PathVariable("id") int id) {
-        if (bindingResult.hasErrors())
-            return "/dentistry/edit";
+        if (bindingResult.hasErrors()){ return "/dentistry/edit_dentistry";}
         dentistryDAO.update(id, dentistry);
-        return "redirect:/dentistry/";
+        return "redirect:/dentistry";
     }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         dentistryDAO.delete(id);
-        return "redirect:/dentistry/";
+        return "redirect:/dentistry";
     }
 }
