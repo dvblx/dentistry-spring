@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import test.dentistryspringwebapp.dao.TimeTableDAO;
+import test.dentistryspringwebapp.models.Dentistry;
 import test.dentistryspringwebapp.models.TimeTable;
 
 import javax.validation.Valid;
@@ -41,6 +42,23 @@ public class TimeTableController {
     public String creation(@ModelAttribute("timetable") @Valid TimeTable timeTable, BindingResult bindingResult){
         if (bindingResult.hasErrors()){return "timetable/new";}
         timeTableDAO.save(timeTable);
+        return "redirect:/timetable";
+    }
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("timetable", timeTableDAO.show(id));
+        return "/timetable/timetable_edit";
+    }
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("dentistry") @Valid TimeTable tt, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()){ return "/timetable/timetable_edit";}
+        timeTableDAO.update(id, tt);
+        return "redirect:/timetable";
+    }
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        timeTableDAO.delete(id);
         return "redirect:/timetable";
     }
 }

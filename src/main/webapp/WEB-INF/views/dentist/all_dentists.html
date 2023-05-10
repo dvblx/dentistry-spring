@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Врачи</title>
 </head>
 <body>
-
+<table border="1">
+    <caption>Список врачей</caption>
+    <tr><th>ФИО</th><th>Клиника</th><th>Стаж</th><th>Специализация</th></tr>
+    <div th:each="dentist : ${dentists}">
+        <tr>
+            <td>
+                <a th:href="@{/dentists/{id}(id=${dentist.getDentist_id()})}"
+                   th:text="${dentist.getDentist_name()}">-</a>
+            </td>
+            <td>
+                <a th:href="@{/dentists/{id}(id=${dentist.getDentistry_id()})}"
+                   th:text="${dentist.getDentistry()}">-</a>
+            </td>
+            <td th:text="${dentist.getExperience()}">-</td>
+            <td th:text="${dentist.getDentist_type()}">-</td>
+        </tr>
+    </div>
+</table>
 </body>
 </html>

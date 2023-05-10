@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${dentist.getDentist_name()}">Title</title>
 </head>
 <body>
+<h4 th:text="${dentist.getDentist_name()}">-</h4>
+<p><a th:href="@{/dentists/{id}(id=${dentist.getDentistry_id()})}"
+      th:text="Клиника: ${dentist.getDentistry()}">-</a></p>
+<p th:text="Стаж: ${dentist.getExperience()}">-</p>
+<p th:text="Специализация: ${dentist.getDentist_type()}">-</p>
+<div th:if="${timetable}">
+    <table border="1">
+        <caption>График</caption>
+        <tr><th>День</th><th>Часы приёма</th></tr>
+        <div th:each="entry : ${timetable}">
+            <tr th:text="${entry.getDay()}"><th>-</th><th th:text="${entry.getAdmission_time()}">-</th></tr>
+        </div>
+    </table>
+    <a> Ссылка на страницу с редактированием расписания</a>
+</div>
 
+<p th:unless = "${timetable}"><a > Ссылка на страницу с заполнением расписания</a></p>
 </body>
 </html>
